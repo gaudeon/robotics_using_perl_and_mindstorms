@@ -37,10 +37,18 @@
                 <section>g++ segmentation fault (program cc1plus). g++ just not working :/. gcc was though and leared you could run c++ code using libstdc++. So installed "sudo aptitude install 'libstdc++6'" with the intent of using gcc. In the process of that other things were updated that lead to g++ to start working!</section>
                 <section>learning SWIG. when starting out (and if your c/c++ is rusty like mine) commit to gcc or g++. started small just to learn swig basics then tried to convert BrickPi3.</section>
                 <section>Perl 5 on Mindstorms</section>
+                <section>As is usually the case when you are blinding going into something you risk trying to the hardest thing first ;)</section>
                 <section>Mindstorms Bricks aren't the most speedy of devices (talk about specs) so you might want to write your code tdd style with mocking on something else</section>
+                <section>Released in September 2013. 178×128 pixel Monochrome LCD. TI Sitara AM1808 (ARM926EJ-S core) @300 MHz Processor, 64 MB RAM, 16 MB Flash</section>
                 <seciont>If that something else isn't the enviroment ev3.pm was compiled under. You will get this error "Can't locate loadable object for module ev". So try something like Docker (this is happy because ev3dev has docker recipes in dockerhub)</section>
+                <section>The ev3dev tutorials at www.ev3dev.org/docs/tutorial are helpful - Hardware Tacho-Motor Class was particularly useful</section>
                 <section>The ev3dev-c perl examples are helpful.. https://github.com/in4lio/ev3dev-c/tree/master/perl</section>
                 <section>The documentation is also helpful.. http://docs.ev3dev.org/projects/lego-linux-drivers/en/ev3dev-jessie/</section>
+                <section>Low powered bricks are more sluggish</section>
+                <section>cpan is pretty heavy on the brick, try cpanminux. sudo apt-get install cpanminus</section>
+                <section>sequence numbers at based on the number identifier that is part of the 'motor' label in /sys/class/tacho-motor. They increment from 0 to 63 as you plug/unplug motors</section>
+                <section>don't forget to run your scripts as root!</section>
+                <section>Perl 6 on Ev3dev. You might not like the experience. The mindstorms brick just doesn't quite have the horse power needed to run vm based languages. Completely my opinion here but is seems to me as Perl 6 optimization for performance continues then someday I may have the opportunity to reasonably try perl 6 on this device. Just as optimal, though, would be if we got an EV4 :)</section>
                 <section>Perl 5 on BrickPi3. how to SWIG BrickPi3.cpp</section>
                 <section>SWIG BrickPi3. "sudo aptitude install swig"</section>
                 <section>Perl 6 on BrickPi3. use NativeCall. https://docs.perl6.org/language/nativecall</section>
