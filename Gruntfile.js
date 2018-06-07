@@ -45,7 +45,11 @@ module.exports = function(grunt) {
 				src: ['*.sass', '*.scss'],
 				dest: 'css/theme',
 				ext: '.css'
-			}
+			},
+			main: {
+				src: 'css/main.scss',
+				dest: 'css/main.css'
+			},
 		},
 
 		autoprefixer: {

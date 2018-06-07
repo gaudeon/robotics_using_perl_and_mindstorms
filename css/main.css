@@ -1,0 +1,131 @@
+.reveal section img {
+  border: 0;
+  background: transparent;
+  box-shadow: none; }
+
+.reveal section div.credit {
+  font-size: small;
+  color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(255, 255, 255, 0.6);
+  width: 100%;
+  /*            transform: rotate(-90deg);
+            position: absolute;
+            top: 50%;
+            left:78%;*/ }
+
+.reveal section code.larger {
+  max-height: 500px; }
+
+.reveal div.overlay-text h1, .reveal div.overlay-text h2, .reveal div.overlay-text h3, .reveal div.overlay-text h4, .reveal div.overlay-text h5, .reveal div.overlay-text h6, .reveal div.overlay-text p {
+  color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(255, 255, 255, 0.75); }
+
+.reveal div.overlay-text.push-up-lg {
+  margin-top: -9.5em; }
+
+.reveal div.overlay-text a {
+  color: #53adb4; }
+
+.reveal h1.overlay-text, .reveal h2.overlay-text, .reveal h3.overlay-text, .reveal h4.overlay-text, .reveal h5.overlay-text, .reveal h6.overlay-text, .reveal p.overlay-text {
+  color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(255, 255, 255, 0.75); }
+
+.reveal h1.push-down-lg, .reveal h2.push-down-lg, .reveal h3.push-down-lg, .reveal h4.push-down-lg, .reveal h5.push-down-lg, .reveal h6.push-down-lg, .reveal p.push-down-lg {
+  margin-top: 14em; }
+
+.reveal h1.push-down, .reveal h2.push-down, .reveal h3.push-down, .reveal h4.push-down, .reveal h5.push-down, .reveal h6.push-down, .reveal p.push-down {
+  margin-top: 10em; }
+
+.reveal h1.push-down-sm, .reveal h2.push-down-sm, .reveal h3.push-down-sm, .reveal h4.push-down-sm, .reveal h5.push-down-sm, .reveal h6.push-down-sm, .reveal p.push-down-sm {
+  margin-top: 8em; }
+
+.reveal h1.push-down-xsm, .reveal h2.push-down-xsm, .reveal h3.push-down-xsm, .reveal h4.push-down-xsm, .reveal h5.push-down-xsm, .reveal h6.push-down-xsm, .reveal p.push-down-xsm {
+  margin-top: 4.5em; }
+
+.reveal h1.push-down-xxsm, .reveal h2.push-down-xxsm, .reveal h3.push-down-xxsm, .reveal h4.push-down-xxsm, .reveal h5.push-down-xxsm, .reveal h6.push-down-xxsm, .reveal p.push-down-xxsm {
+  margin-top: 2.15em; }
+
+.reveal h1.push-up-lg, .reveal h2.push-up-lg, .reveal h3.push-up-lg, .reveal h4.push-up-lg, .reveal h5.push-up-lg, .reveal h6.push-up-lg, .reveal p.push-up-lg {
+  margin-top: -9.5em; }
+
+.reveal h1.push-up, .reveal h2.push-up, .reveal h3.push-up, .reveal h4.push-up, .reveal h5.push-up, .reveal h6.push-up, .reveal p.push-up {
+  margin-top: -7em; }
+
+.reveal h1.push-up-sm, .reveal h2.push-up-sm, .reveal h3.push-up-sm, .reveal h4.push-up-sm, .reveal h5.push-up-sm, .reveal h6.push-up-sm, .reveal p.push-up-sm {
+  margin-top: -5em; }
+
+.reveal p.overlay-text {
+  padding: 1em; }
+
+.reveal p.indent-1 {
+  text-align: left;
+  margin-left: 1.25em; }
+
+.reveal p.indent-2 {
+  text-align: left;
+  margin-left: 2.5em; }
+
+.reveal p.indent-3 {
+  text-align: left;
+  margin-left: 3.75em; }
+
+.reveal p.indent-4 {
+  text-align: left;
+  margin-left: 5em; }
+
+.reveal p.indent-5 {
+  text-align: left;
+  margin-left: 6.25em; }
+
+.reveal p.indent-6 {
+  text-align: left;
+  margin-left: 7.5em; }
+
+.reveal p.indent-7 {
+  text-align: left;
+  margin-left: 8.75em; }
+
+.reveal p.indent-8 {
+  text-align: left;
+  margin-left: 10em; }
+
+.reveal p.indent-9 {
+  text-align: left;
+  margin-left: 11.25em; }
+
+.reveal p.indent-10 {
+  text-align: left;
+  margin-left: 12.5em; }
+
+.reveal span.smaller {
+  font-size: medium; }
+
+.reveal pre {
+  padding: 1em; }
+
+.credits .credit {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: small;
+  color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(255, 255, 255, 0.6);
+  width: 100%;
+  text-align: right;
+  padding: .1em; }
+
+.dragonlance .credit.dragonlance {
+  display: block; }
+
+.ev3visualloop .credit.ev3visualloop {
+  display: block; }
+
+.ev3brick .credit.ev3brick {
+  display: block; }
+
+.langsev3dev .credit.langsev3dev {
+  display: block; }
+
+html.lego_house .reveal .slide-background {
+  background-position: bottom center; }

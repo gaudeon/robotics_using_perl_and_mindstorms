@@ -1,0 +1,131 @@
+@mixin overlay-text {
+    color: rgba(0,0,0,.8);
+    background-color: rgba(255,255,255,.75);
+}
+
+.reveal {
+    section {
+        img {
+            border: 0;
+            background: transparent;
+            box-shadow: none;
+        }
+
+        div.credit {
+            font-size: small;
+            color: rgba(0,0,0,.8);
+            background-color: rgba(255,255,255,.6);
+            width: 100%;
+/*            transform: rotate(-90deg);
+            position: absolute;
+            top: 50%;
+            left:78%;*/
+        }
+
+        code.larger {
+            max-height: 500px;
+        }
+    }
+
+    div.overlay-text {
+        h1, h2, h3, h4, h5, h6, p {
+            @include overlay-text;
+        }
+
+        &.push-up-lg {
+            margin-top: -9.5em;
+        }
+
+        a {
+            color: #53adb4;
+        }
+    }
+
+    h1, h2, h3, h4, h5, h6, p {
+        &.overlay-text {
+            @include overlay-text;
+        }
+
+        &.push-down-lg {
+            margin-top: 14em;
+        }
+
+        &.push-down {
+            margin-top: 10em;
+        }
+
+        &.push-down-sm {
+            margin-top: 8em;
+        }
+
+        &.push-down-xsm {
+            margin-top: 4.5em;
+        }
+
+        &.push-down-xxsm {
+            margin-top: 2.15em;
+        }
+
+        &.push-up-lg {
+            margin-top: -9.5em;
+        }
+
+        &.push-up {
+            margin-top: -7em;
+        }
+
+        &.push-up-sm {
+            margin-top: -5em;
+        }
+    }
+
+    p {
+        &.overlay-text {
+           padding: 1em;
+        }
+
+        @for $n from 1 through 10 {
+            &.indent-#{$n} {
+                text-align: left;
+                margin-left: 1.25em * $n;
+            }
+        }
+    }
+
+    span {
+        &.smaller {
+            font-size: medium;
+        }
+    }
+
+    pre {
+        padding: 1em;
+    }
+}
+
+.credits {
+    .credit {
+        display: none;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        font-size: small;
+        color: rgba(0,0,0,.8);
+        background-color: rgba(255,255,255,.6);
+        width: 100%;
+        text-align: right;
+        padding: .1em;
+    }
+}
+
+@each $credit in (
+    dragonlance ev3visualloop ev3brick langsev3dev
+                 )  {
+    .#{$credit} .credit.#{$credit} {
+        display: block;
+    }
+}
+
+html.lego_house .reveal .slide-background {
+    background-position: bottom center;
+}
