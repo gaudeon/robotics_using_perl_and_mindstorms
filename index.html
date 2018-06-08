@@ -28,6 +28,9 @@
 			<div class="slides">
                 <section>
                     <h3>Fun with robotics using Perl and LEGO® Mindstorms</h3>
+                    <aside class="notes">
+                        Don't forget your laser pointer
+                    </aside>
                 </section>
 
                 <section data-state="dragonlance">
@@ -54,15 +57,10 @@
                     Using a text-based language (Perl) to control Mindstorms with a reasonable degree of usability.
                 </section>
 
-                <section data-state="ev3visualloop">
-                    <img src="images/ev3visualloop.png">
+                <section>
+                    <img src="images/laptop.jpg" width="60%">
                     <h4>But first...</h4>
-                    <aside class="notes">
-                        Using Mindstorms the with provided software/IDE
-                    </aside>
                 </section>
-
-                <section>(picture needed) PC/Mac or Lighter Version for Tablets</section>
 
                 <section data-state="ev3visualloop">
                     <img src="images/ev3visualloop.png">
@@ -111,7 +109,7 @@
                 </section>
 
                 <section>
-                    (picture of ev3dev on mindstorms screen)
+                    <img src="images/ev3boot.jpg" width="50%"><br>
                     <p>We can run whatever language runs on Linux so we have the first part of our solution!</p>
                 </section>
 
@@ -144,49 +142,62 @@
                     <p>SWIG generates a shared object file (.so) and a Perl module (.pm)</p>
                 </section>
 
-                <section>
-                    ev3.pm!
+                <section data-state="ev3devcperl">
+                    <img src="images/ev3devcperl.png">
                     <p>Thanks <a href="https://github.com/in4lio/ev3dev-c" target="_blank">ev3dev-c</a></p>
                 </section>
 
                 <section>
-                    <h4>However...</h4>
+                    <h4>Further Challenge...</h4>
                     The EV3 brick isn't the most performant
                     <p class="fragment">So coding in a session on the EV3 Brick isn't ideal</p>
                 </section>
+    
                 <section>
                     <p>TI Sitara AM1808 (ARM926EJ-S core) @300 MHz Processor</p>
-                    <p><a href="http://www.ti.com/lit/er/sprz313h/sprz313h.pdf" target="_blank">Errata Doc was out in 2010</a></p>
                     <p>64 MB RAM</p>
                     <p>16 MB Flash</p>
+                    <aside class="notes">
+                     http://www.ti.com/lit/er/sprz313h/sprz313h.pdf - Processor has beend around at least since 2010
+                    </aside>
                 </section>
-                <section>
-                    Yay Docker!
-                    <p>https://hub.docker.com/search/?q=ev3dev</p>
+
+                <section data-state="docker">
+                    <img src="images/docker.jpg">
+                    <h4><a href="https://hub.docker.com/search/?q=ev3dev" target="_blank">Docker!</a></h4>
                 </section>
+
                 <section>
-                    Fun with tests and mocks!
-                    https://github.com/gaudeon/ev3dev-perl
-                    <ul>
-                        lib/<br>
-                        <ul>
-                        ev3.pm<br>
-                        ev3.so<br>
-                        server.pm
-                        </ul>
-                        t/<br>
-                        <ul>
-                            lib/<br>
-                            <ul>
-                            ev3mock.pm
-                            </ul>
+                    <a href="https://github.com/gaudeon/ev3dev-perl" target="_blank">The Project</a>
+                    <pre><code data-trim data-noescape class="bash">
+                        lib/
+                            ev3.pm
+                            ev3.so
+                            server.pm
+                        t/
+                            lib/
+                                ev3mock.pm
                             server.t 
-                        </ul>
-                    </ul>
+                    </code></pre>
                 </section>
+
+                <section data-state="ev3devcexamples">
+                    <img src="images/ev3devcexamples.png" width="50%">
+                    <h4><a href="http://in4lio.github.io/ev3dev-c/" target="_blank">Helpful Docs / Examples</a></h4>
+                </section>
+
+                <section data-state="ev3devcperlexamples">
+                    <img src="images/ev3devcperlexamples.png">
+                    There are Perl Examples!
+                </section>
+
                 <section>
-                    Motor Movement
                     <pre><code data-trim data-noescape class="perl">
+                        #!/usr/bin/env perl
+
+                        use strict;
+                        use warnings;
+
                         ev3::ev3_init() != -1 || die 'failed to initialized ev3';
 
                         while ( ev3::ev3_tacho_init() < 1 ) {
@@ -194,7 +205,7 @@
                         }
 
                         my ( $ok, $sn ) = ev3::ev3_search_tacho( 
-                            $ev3::LEGO_EV3_M_MOTOR
+                            $ev3::LEGO_EV3_L_MOTOR
                         );
 
                         if ($ok ) {
@@ -211,9 +222,10 @@
 
                         ev3::ev3_unint();
                     </code></pre>
+                    Motor Movement
                 </section>
+
                 <section>
-                    Motor Movement - Initialization
                     <pre><code data-trim data-noescape class="perl">
                         ev3::ev3_init() != -1 || die 'failed to initialized ev3';
 
@@ -221,17 +233,19 @@
                             sleep 1;
                         }
                     </code></pre>
+                    Motor Movement - Initialization
                 </section>
+
                 <section>
-                    Motor Movement - Finding our Motor
                     <pre><code data-trim data-noescape class="perl">
                         my ( $ok, $sn ) = ev3::ev3_search_tacho( 
                             $ev3::LEGO_EV3_M_MOTOR 
                         );
                     </code></pre>
+                    Motor Movement - Finding our Motor
                 </section>
+
                 <section>
-                    Motor Movement - Moving our Motor
                     <pre><code data-trim data-noescape class="perl">
                         my $speed = 500;
                         ev3::set_tacho_speed_sp( $sn, $speed );
@@ -243,105 +257,171 @@
                             $sn, $ev3::TACHO_RUN_FOREVER
                         );
                     </code></pre>
-                </section>
-                <section>
-                    Motor Movement - Uninitialization
-                    <pre><code data-trim data-noescape class="perl">
-                        ev3::ev3_unint();
-                    </code></pre>
-                </section>
-                <section>
-                    Demo Time!
-                </section>
-                <section>
-                    Useful Tips!
-                    <p>"Can't locate loadable object for module ev" likely means code it's on ev3dev or docker container</p>
-                    <p>There is some helpful docs to dig through! (links at the end)</p>
-                    <p>Battery Power matteries, when your batteries are low your OS gets <strong>really</strong> sluggish</p>
-                    <p>Don't forget to run your scripts as root!</p>
-                </section>
-                <section>
-                    What about Perl 6? <span class="fragment">sadface</span>
-                </section>
-                <section>
-                    <p>Adventures with BrickPi3?</p>
-                    Still ongoing but here is what I know...
-                </section>
-                <section>
-                    More OS options
-                    <ul>
-                        EV3Dev - I failed to get it to work (might have been firmware)
-                        Raspian for Robots
-                    </ul>
-                </section>
-                <section>
-                    Don't pull the SD out of a BrickPi3 while the case is still on.
-                    (picture)
-                </section>
-                <section>
-                    Dexter Industries is your friend!
-                    <p>awesome support experience</p>
-                </section>
-                <section>
-                    Updating firmware https://github.com/DexterInd/BrickPi3/tree/master/Firmware
-                </section>
-                <section>
-                    There is a c lib on Rasbian for Robots but no SWIG for perl. Building a SWIG to Perl implementation is an interesting experience but...
-                </section>
-                <section>
-                    Interacting with the BrickPi directly can happen by sending some bytes over SPI.
-                    And there is even a Perl module to help you. RPi::SPI
-                </section>
-                <section>
-                    Perl 6?
-                    <p>Definite possibility</p>
-                    <p>Instead of SWIG you could try NativeCall to use the C lib in Perl 6. https://docs.perl6.org/language/nativecall</p>
-                    <p>No SPI module but you could still figure out how to interface with it</p> 
-                    <ul class="fragment">cheating by looking at RPi::SPI is totally allowed)</ul>
+                    Motor Movement - Moving our Motor
                 </section>
 
                 <section>
-                    <h4>A bunch of links...</h4>
+                    <pre><code data-trim data-noescape class="perl">
+                        ev3::ev3_unint();
+                    </code></pre>
+                    Motor Movement - Uninitialization
+                </section>
+
+                <section data-state="ev3devlangsupporttip">
+                    <img src="images/ev3devlangsupporttip.png"><br>
+                    In hindsight, this path I adventured down was likely a more difficult one...
+                </section>
+
+                <section>
+                    <pre><code data-trim data-noescape class="perl">
+                        #!/usr/bin/env perl
+
+                        use strict;
+                        use warnings;
+
+                        use File::Spec;
+
+                        my $tacho_sys_dir = $ev3::TACHO_DIR;
+
+                        my ( $ok, $sn ) = ev3::ev3_search_tacho(
+                            $ev3::LEGO_EV3_L_MOTOR
+                        );
+
+                        my $max_speed_file = File::Spec->catfile(
+                            $tacho_sys_dir, 
+                            "motor$sn", 
+                            'max_speed'
+                        );
+
+                        open my $fh, 
+                                '&lt;', 
+                                $max_speed_file || die "Could not open $max_speed_file $1";
+
+                        my @lines = <$fh>;
+
+                        close $fh;
+
+                        my $data = join "\n", @lines;
+                        chomp $data;
+
+                        print "My max speed is: $data\n";
+                    </code></pre>
+                    SysFS among other things...
+                </section>
+
+                <section>
+                    <pre><code data-trim data-noescape class="perl">
+                        my $tacho_sys_dir = $ev3::TACHO_DIR;
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code data-trim data-noescape class="perl">
+                        my $max_speed_file = File::Spec->catfile(
+                            $tacho_sys_dir,
+                            "motor$sn",
+                            'max_speed'
+                        );
+
+                        open my $fh,
+                                '&lt;',
+                                $max_speed_file || die "Could not open $max_speed_file $1";
+
+                        my @lines = <$fh>;
+
+                        close $fh;
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h4>Demo Time!</h4>
+                </section>
+
+                <section data-state="lucy">
+                    <img src="images/lucy.jpg" width="30%"><br>
+                    Helpful Advice
+                </section>
+
+                <section>
+                    <pre><code class="bash">sudo apt-get install cpanminus</code></pre>
+                </section>
+
+                <section>
+                    <p>"Can't locate loadable object for module ev"</p><br>
+                    <p>Likely means code isn't being run on ev3dev or docker container</p>
+                </section>
+
+                <section>
+                    <p>Battery power matters.</p><br>
+                    <p>Low power and your OS gets <strong>really</strong> sluggish</p>
+                </section>
+
+                <section>
+                    <p>Don't forget to run your scripts as root!</p>
+                </section>
+
+                <section>
+                    What about Perl 6? <span class="fragment">:(</span>
+                </section>
+
+                <section>
+                    <img src="images/brickpi3.jpg" width="60%">
+                    <h4>Next Adventure?</h4>
+                </section>
+
+                <section>
+                    <p>EV3Dev for BrickPi</p>
+                    <p>Raspian for Robots</p>
+                </section>
+
+                <section>
+                    <img src="images/brokensd.jpg" width="60%">
+                </section>
+
+                <section>
+                    Dexter Industries has great support!
+
+                    <aside class="notes">
+                        John Cole
+                    </aside>
+                </section>
+
+                <section>
+                    <a href="https://github.com/DexterInd/BrickPi3/tree/master/Firmware">Updating firmware</a>
+                </section>
+
+                <section>
+                    <h4>Coding on Raspbian For Robots</h4>
+
+                    There is a <a href="https://github.com/DexterInd/BrickPi3/tree/master/Software/C" target="_blank">C lib</a> on Rasbian for Robots but no SWIG for perl. Building a SWIG to Perl implementation is an interesting experience but...
+                </section>
+
+                <section>
+                    <h4>Coding on Raspbian For Robots cont.</h4>
+
+                    Interacting with the BrickPi directly can happen by sending some bytes over SPI.
+                    And there is even a Perl Module, <a href="https://metacpan.org/pod/RPi::SPI">RPi::SPI</a>,  to help you.
+                </section>
+
+                <section>
+                    <h4>Perl 6?</h4>
+                    <p>Instead of SWIG you could try <a href="https://docs.perl6.org/language/nativecall" target="_blank">NativeCall</a> to use the C lib in Perl 6 or...</p>
+                </section>
+
+                <section>
+                    <h4>Perl 6? cont.</h4>
+                    <p>Try SPI</p> 
+                    <p>No module yet but there is <a href="https://www.dexterindustries.com/BrickPi/brickpi3-technical-design-details/brickpi3-communication-protocol/" target="_blank">documentation</a> for interfacing with the BrickPi3.</p>
                 </section>
 
                 <section>
                     <img src="images/OpenWest-Hadouken.gif" class="no-border" width="400px">
                     <h4>Travis Chase</h4>
-                    <small>Software Engineer and Tech Enthusiast (Believer in Wizardry)</small><br>
+                    <small>Senior Manager of Software Engineering @ Endurance Intl.</small><br>
                     <small><a href="mailto: gaudeon@cpan.org">gaudeon@cpan.org</a></small><br>
                     <small><a href="http://github.com/gaudeon">github.com/gaudeon</a></small>
                 </section>
                
-                <!-- Throw away notes --> 
-
-				<section>Intented Audience. Those interested in playing with mindstorms or brickpi with perl 5 / 6. I hope you are interested in hearing about my experience trying this out. Because you really can figure out a lot of this on your own by searching the internet.</section>
-                <section>Audience Plays Mindstorms</section>
-                <section>Ev3dev on Minstorms</seciton>
-				<section>Perl 5 on Mindstorms. ev3dev-c provides a swig</section>
-                <section>Perl 6 on Mindstorms. use NativeCall. https://docs.perl6.org/language/nativecall</section>
-                <section>BrickPi3 setup</section>
-                <section>Tried Ev3dev on BrickPi3 but didn't work so tried Raspbian for Robots</section>
-                <section>Raspian for Robots Quality of Life additions (like vim instead of just vi for those that like vi/vim, and using vim as git's core editor)</section>
-                <section>Don't pull the SD out of a BrickPi3 while the case is still on</section>
-                <section>If BrickPi3 hat isn't working try updating firmware https://github.com/DexterInd/BrickPi3/tree/master/Firmware. Talk about my experience with support from Dexter Industries.</section>
-                <section>g++ segmentation fault (program cc1plus). g++ just not working :/. gcc was though and leared you could run c++ code using libstdc++. So installed "sudo aptitude install 'libstdc++6'" with the intent of using gcc. In the process of that other things were updated that lead to g++ to start working!</section>
-                <section>learning SWIG. when starting out (and if your c/c++ is rusty like mine) commit to gcc or g++. started small just to learn swig basics then tried to convert BrickPi3.</section>
-                <section>Perl 5 on Mindstorms</section>
-                <section>As is usually the case when you are blinding going into something you risk trying to the hardest thing first ;)</section>
-                <section>Mindstorms Bricks aren't the most speedy of devices (talk about specs) so you might want to write your code tdd style with mocking on something else</section>
-                <section>Released in September 2013. 178×128 pixel Monochrome LCD. TI Sitara AM1808 (ARM926EJ-S core) @300 MHz Processor, 64 MB RAM, 16 MB Flash</section>
-                <seciont>If that something else isn't the enviroment ev3.pm was compiled under. You will get this error "Can't locate loadable object for module ev". So try something like Docker (this is happy because ev3dev has docker recipes in dockerhub)</section>
-                <section>The ev3dev tutorials at www.ev3dev.org/docs/tutorial are helpful - Hardware Tacho-Motor Class was particularly useful</section>
-                <section>The ev3dev-c perl examples are helpful.. https://github.com/in4lio/ev3dev-c/tree/master/perl</section>
-                <section>The documentation is also helpful.. http://docs.ev3dev.org/projects/lego-linux-drivers/en/ev3dev-jessie/</section>
-                <section>Low powered bricks are more sluggish</section>
-                <section>cpan is pretty heavy on the brick, try cpanminux. sudo apt-get install cpanminus</section>
-                <section>sequence numbers at based on the number identifier that is part of the 'motor' label in /sys/class/tacho-motor. They increment from 0 to 63 as you plug/unplug motors</section>
-                <section>don't forget to run your scripts as root!</section>
-                <section>Perl 6 on Ev3dev. You might not like the experience. The mindstorms brick just doesn't quite have the horse power needed to run vm based languages. Completely my opinion here but is seems to me as Perl 6 optimization for performance continues then someday I may have the opportunity to reasonably try perl 6 on this device. Just as optimal, though, would be if we got an EV4 :)</section>
-                <section>Perl 5 on BrickPi3. how to SWIG BrickPi3.cpp</section>
-                <section>SWIG BrickPi3. "sudo aptitude install swig"</section>
-                <section>Perl 6 on BrickPi3. use NativeCall. https://docs.perl6.org/language/nativecall</section>
 			</div>
 		</div>
 
@@ -350,6 +430,12 @@
             <div class="credit ev3visualloop" data-img="images/ev3visualloop.png">Photo: Klaus-Dieter Keller | commons.wikimedia.org/wiki/File:Entfernungsmesser.png | BY-NC-4.0</div>
             <div class="credit ev3brick" data-img="images/ev3brick.png">Photo: Vetalru | commons.wikimedia.org/wiki/File:Lego-mindstorms-ev3.jpg | BY-SA-3.0</div>
             <div class="credit langsev3dev" data-img="images/Programming_Languages_on_ev3dev.png">Captured from www.ev3dev.org/docs/programming-languages</div>
+            <div class="credit ev3devcperl" data-img="images/ev3devcperl.png">Captured from github.com/in4lio/ev3dev-c/tree/master/perl</div>
+            <div class="credit docker" data-img="images/docker.jpg">Photo: Linux Screenshots | www.flickr.com/photos/xmodulo | BY-2.0</div>
+            <div class="credit ev3devcexamples" data-img="images/ev3devcexamples.png">Captured from giithub.com/in4lio/ev3dev-c</div>
+            <div class="credit ev3devcperlexamples" data-img="images/ev3devcperlexamples.png">Captured from github.com/in4lio/ev3dev-c/tree/master/perl/eg</div>
+            <div class="credit ev3devlangsupporttip" data-img="images/ev3devlangsupporttip.png">Captured from www.ev3dev.org/docs/programming-languages</div>
+            <div class="credit lucy" data-img="images/lucy.jpg">Photo: Allentchang | commons.wikimedia.org/wiki/File:Lucy_and_the_psychiatric_help_booth.jpg | BY-SA-3.0</div>
         </div>
 
 		<script src="lib/js/head.min.js"></script>

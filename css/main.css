@@ -127,5 +127,23 @@
 .langsev3dev .credit.langsev3dev {
   display: block; }
 
+.ev3devcperl .credit.ev3devcperl {
+  display: block; }
+
+.docker .credit.docker {
+  display: block; }
+
+.ev3devcexamples .credit.ev3devcexamples {
+  display: block; }
+
+.ev3devcperlexamples .credit.ev3devcperlexamples {
+  display: block; }
+
+.ev3devlangsupporttip .credit.ev3devlangsupporttip {
+  display: block; }
+
+.lucy .credit.lucy {
+  display: block; }
+
 html.lego_house .reveal .slide-background {
   background-position: bottom center; }
