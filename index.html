@@ -81,6 +81,20 @@
                     <p>SD Card Slot</p>
                 </section>
 
+                <section data-state="ev3motors">
+                    <img src="images/ev3motors.png">
+                </section>
+
+                <section data-state="ev3motors">
+                    <img src="images/ev3sensors.png">
+                </section>
+
+                <section>
+                    <h4>Not just a toy</h4>
+                    <a href="http://mindcuber.com/" target="_blank">MindCuber</a><br>
+                    <a href="https://www.youtube.com/watch?v=0YfnKB1zWOU&t=12s" target="_blank">Braigo - Braille Printer</a>
+                </section>
+
                 <section>
                     <h4>Mindstorms with Perl</h4>
                     Looking for our solution...
@@ -106,6 +120,26 @@
                     <h4><a href="http://www.ev3dev.org/" target="_blank">EV3Dev</a></h4>
                     <p>Debian based Linux Distro</p>
                     <p>Boots off the SD Card</p>
+                </section>
+
+                <section>
+                    <h4><a href="http://docs.ev3dev.org/projects/lego-linux-drivers/en/ev3dev-jessie/motors.html" target="_blank">Supported Motors</a></h4>
+                    EV3 Motors<br>
+                    NXT Motors<br>
+                    Power Functions Motors<br>
+                    DC Motors
+                </section>
+
+                <section>
+                    <h4><a href="http://docs.ev3dev.org/projects/lego-linux-drivers/en/ev3dev-jessie/sensors.html" target="_blank">Supported Sensors</a></h4>
+                    EV3 Sensors<br>
+                    NXT Sensors<br>
+                    Pixy (Object Sensing Camera - Charmed Labs)<br>
+                    dFlex (Bending - Dexter Industries)<br>
+                    Sensors from Fatcatlab<br>
+                    Sensors from HiTechnic<br>
+                    CruizCore (Gyro/Accelorometer - MicroInfinity)<br>
+                    Sensors from mindsensors.com 
                 </section>
 
                 <section>
@@ -170,6 +204,7 @@
                 <section>
                     <a href="https://github.com/gaudeon/demo-ev3pm" target="_blank">The Project</a>
                     <pre><code data-trim data-noescape class="bash">
+                        Dockerfile
                         lib/
                             ev3.pm
                             ev3.so
@@ -179,6 +214,27 @@
                                 ev3mock.pm
                             server.t 
                     </code></pre>
+                </section>
+
+                <section>
+                    <pre><code data-trim data-noescape class="docker">
+                    FROM ev3dev/ev3dev-jessie-ev3-base
+
+                    RUN apt-get update; apt-get install -y cpanminus make gcc
+
+                    RUN cpanm --installdeps Data::Debug Test::MockModule \ 
+                        Net::Server CGI::Lite
+
+                    RUN cpanm Data::Debug Test::MockModule Net::Server CGI::Lite
+
+                    # docker build -t ev3dev .
+                    # docker run -it --rm -v `pwd`:`pwd` -w `pwd` ev3dev bash
+                    # docker run --rm -v `pwd`:`pwd` -w `pwd` -p 8080:8080 \ 
+                    #     ev3dev perl bin/server.pl
+                    # docker run --rm -v `pwd`:`pwd` -w `pwd` ev3dev \ 
+                    #     prove -v t/server.t
+                    </code></pre>
+                    Dockerfile
                 </section>
 
                 <section data-state="ev3devcexamples">
@@ -200,7 +256,7 @@
 
                         ev3::ev3_init() != -1 || die 'failed to initialized ev3';
 
-                        while ( ev3::ev3_tacho_init() < 1 ) {
+                        while ( ev3::ev3_tacho_init() &lt; 1 ) {
                             sleep 1;
                         }
 
@@ -208,7 +264,7 @@
                             $ev3::LEGO_EV3_L_MOTOR
                         );
 
-                        if ($ok ) {
+                        if ($ok) {
                             my $speed = 500;
                             ev3::set_tacho_speed_sp( $sn, $speed );
 
@@ -220,7 +276,7 @@
                             );
                         }
 
-                        ev3::ev3_unint();
+                        ev3::ev3_uninit();
                     </code></pre>
                     Motor Movement
                 </section>
@@ -229,11 +285,11 @@
                     <pre><code data-trim data-noescape class="perl">
                         ev3::ev3_init() != -1 || die 'failed to initialized ev3';
 
-                        while ( ev3::ev3_tacho_init() < 1 ) {
+                        while ( ev3::ev3_tacho_init() &lt; 1 ) {
                             sleep 1;
                         }
                     </code></pre>
-                    Motor Movement - Initialization
+                    Initialization
                 </section>
 
                 <section>
@@ -242,7 +298,7 @@
                             $ev3::LEGO_EV3_M_MOTOR 
                         );
                     </code></pre>
-                    Motor Movement - Finding our Motor
+                    Finding our Motor
                 </section>
 
                 <section>
@@ -257,14 +313,86 @@
                             $sn, $ev3::TACHO_RUN_FOREVER
                         );
                     </code></pre>
-                    Motor Movement - Moving our Motor
+                    Moving
                 </section>
 
                 <section>
                     <pre><code data-trim data-noescape class="perl">
                         ev3::ev3_unint();
                     </code></pre>
-                    Motor Movement - Uninitialization
+                    Uninitialization
+                </section>
+
+                <section>
+                    <pre><code data-trim data-noescape class="perl">
+                        #!/usr/bin/env perl
+
+                        use strict;
+                        use warnings;
+
+                        ev3::ev3_init() != -1 || die 'failed to initialized ev3';
+
+                        ev3::ev3_sensor_init();
+
+                        my ( $ok, $sn_color ) = ev3::ev3_search_sensor(
+                            $ev3::LEGO_EV3_COLOR
+                        );
+
+                        if ($ok) {
+                            ev3::set_sensor_mode( $sn_color, "COL-REFLECT" );
+
+                            my $last_val;
+                            while (1) {
+                                my ( $ok, $val ) = ev3::get_sensor_value( 0, $sn_color );
+
+                                if ($last_val != $val) {
+                                    print "$val\n";
+                                    $last_val = $val;
+                                }
+                            }
+                        }
+
+                        ev3::ev3_uninit();
+                    </code></pre>
+                    Sensor Example
+                </section>
+
+                <section>
+                    <pre><code data-trim data-noescape class="perl">
+                        ev3::ev3_sensor_init();
+                    </code></pre>
+                    Initialization
+                </section>
+
+                <section>
+                    <pre><code data-trim data-noescape class="perl">
+                    my ( $ok, $sn_color ) = ev3::ev3_search_sensor(
+                        $ev3::LEGO_EV3_COLOR
+                    );
+                    </code></pre>
+                    Finding our Sensor
+                </section>
+
+                <section>
+                    <pre><code data-trim data-noescape class="perl">
+                        ev3::set_sensor_mode( $sn_color, "COL-REFLECT" );
+                    </code></pre>
+                    Sensor Modes
+                </section>
+
+                <section>
+                    <pre><code data-trim data-noescape class="perl">
+                    my $last_val;
+                    while (1) {
+                        my ( $ok, $val ) = ev3::get_sensor_value( 0, $sn_color );
+
+                        if ($last_val != $val) {
+                            print "$val\n";
+                            $last_val = $val;
+                        }
+                    }
+                    </code></pre>
+                    Getting Data
                 </section>
 
                 <section data-state="ev3devlangsupporttip">
@@ -281,15 +409,11 @@
 
                         use File::Spec;
 
-                        my $tacho_sys_dir = $ev3::TACHO_DIR;
-
-                        my ( $ok, $sn ) = ev3::ev3_search_tacho(
-                            $ev3::LEGO_EV3_L_MOTOR
-                        );
+                        my $sysfs = "/sys/class/tacho-motor";
 
                         my $max_speed_file = File::Spec->catfile(
-                            $tacho_sys_dir, 
-                            "motor$sn", 
+                            $sysfs, 
+                            "motor0", 
                             'max_speed'
                         );
 
@@ -306,13 +430,7 @@
 
                         print "My max speed is: $data\n";
                     </code></pre>
-                    SysFS among other things...
-                </section>
-
-                <section>
-                    <pre><code data-trim data-noescape class="perl">
-                        my $tacho_sys_dir = $ev3::TACHO_DIR;
-                    </code></pre>
+                    ... than using things like ev3dev's SysFS for devices
                 </section>
 
                 <section>
@@ -347,12 +465,12 @@
                 </section>
 
                 <section>
-                    <p>"Can't locate loadable object for module ev"</p><br>
-                    <p>Likely means code isn't being run on ev3dev or docker container</p>
+                    <pre><code class="bash">"Can't locate loadable object for module ev"</code></pre>
+                    Likely means code isn't being run on ev3dev or docker container
                 </section>
 
                 <section>
-                    <p>Battery power matters.</p><br>
+                    <u>Battery power matters.</u>
                     <p>Low power and your OS gets <strong>really</strong> sluggish</p>
                 </section>
 
@@ -361,12 +479,22 @@
                 </section>
 
                 <section>
-                    What about Perl 6? <span class="fragment">:(</span>
+                    What about Perl 6?<br> <h3 class="fragment">:(</h3>
                 </section>
 
                 <section>
                     <img src="images/brickpi3.jpg" width="60%">
                     <h4>Next Adventure?</h4>
+                </section>
+
+                <section>
+                    <h3>Raspberry PI 3 B</h3>
+                    <small>CPU: 1.2 GHZ quad-core ARM Cortex A53 (ARMv8 Instruction Set)</small><br>
+                    <small>GPU: Broadcom VideoCore IV @ 400 MHz</small><br>
+                    <small>Memory: 1 GB LPDDR2-900 SDRAM</small><br>
+                    <small>USB ports: 4</small><br>
+                    <small>Network: 10/100 MBPS Ethernet, 802.11n Wireless LAN, Bluetooth 4.0 (BLE)</small><br>
+                    <small>GPIO</small>
                 </section>
 
                 <section>
@@ -415,6 +543,11 @@
                 </section>
 
                 <section>
+                    ... so you're saying there's a chance.
+                    <h3 class="fragment">:)</h3>
+                </section>
+
+                <section>
                     <img src="images/OpenWest-Hadouken.gif" class="no-border" width="350px"><br>
                     <div style="display: inline-block; width: 40%; ">
                         <h4>Travis Chase</h4>
@@ -444,6 +577,7 @@
             <div class="credit ev3devcperlexamples" data-img="images/ev3devcperlexamples.png">Captured from github.com/in4lio/ev3dev-c/tree/master/perl/eg</div>
             <div class="credit ev3devlangsupporttip" data-img="images/ev3devlangsupporttip.png">Captured from www.ev3dev.org/docs/programming-languages</div>
             <div class="credit lucy" data-img="images/lucy.jpg">Photo: Allentchang | commons.wikimedia.org/wiki/File:Lucy_and_the_psychiatric_help_booth.jpg | BY-SA-3.0</div>
+            <div class="credit ev3motors" data-img="images/ev3motors.jpg">Data from www.slideshare.net/ragunathanselvaraj/lego-mindstrom-ev3</div>
         </div>
 
 		<script src="lib/js/head.min.js"></script>

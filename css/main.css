@@ -145,5 +145,8 @@
 .lucy .credit.lucy {
   display: block; }
 
+.ev3motors .credit.ev3motors {
+  display: block; }
+
 html.lego_house .reveal .slide-background {
   background-position: bottom center; }
