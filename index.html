@@ -45,15 +45,17 @@
 
                 <section>
                     <h4>Why the Story?</h4>
-                    <aside class="notes">
-                        Coding with Robots is Wizardry<br><br>
-                        This trying to do something more with Mindstorms outside of the normal bounds is our new adventure and as youw will see, as with many new adventuers,
-                        you can easily find yourself taking the the more complicated path first until you know you way better.
-                    </aside>
+                    <p class="fragment">You can easily find yourself taking the the more complicated path first until you know you way better.</p>
                 </section>
 
                 <section>
-                    <h4>What are we doing?</h4>
+                    <h4>Why the Story?</h4>
+                    <p class="fragment">Coding is Magic...</p>
+                    <p class="fragment">...Coding with Robots is Wizardry</p>
+                </section>
+
+                <section>
+                    <h4>What is our adventure?</h4>
                     Using a text-based language (Perl) to control Mindstorms with a reasonable degree of usability.
                 </section>
 
@@ -73,12 +75,15 @@
                 </section>
 
                 <section>
-                    <p>178×128 pixel Monochrome LCD</p>
-                    <p>TI Sitara AM1808 (ARM926EJ-S core) @300 MHz Processor</p>
-                    <p>64 MB RAM</p>
-                    <p>16 MB Flash</p>
-                    <p>USB Port</p>
-                    <p>SD Card Slot</p>
+                    <table style="border: none; font-size: .7em">
+                    <tr><td>Screen</td><td>178×128 pixel Monochrome LCD</td></tr>
+                    <tr><td>CPU</td><td>TI Sitara AM1808 (ARM926EJ-S core) @300 MHz Processor</td></tr>
+                    <tr><td>Memory</td><td>64 MB RAM / 16 MB Flash</td></tr>
+                    <tr><td>USB</td><td>1 Ports</td></tr>
+                    <tr><td>Sensors</td><td>4 Ports <i>(Labeled: 1-4)</i></td></tr>
+                    <tr><td>Motors</td><td>4 Ports <i>(Labeled: A-D)</i></td></tr>
+                    <tr><td colspan=2>1 SD Card Slot</td></tr>
+                    </table>
                 </section>
 
                 <section data-state="ev3motors">
@@ -89,7 +94,8 @@
                     <img src="images/ev3sensors.png">
                 </section>
 
-                <section>
+                <section data-state="minifig">
+                    <img src="images/lego_minifig.jpg" width="30%"><br>
                     <h4>Not just a toy</h4>
                     <a href="http://mindcuber.com/" target="_blank">MindCuber</a><br>
                     <a href="https://www.youtube.com/watch?v=0YfnKB1zWOU&t=12s" target="_blank">Braigo - Braille Printer</a>
@@ -409,11 +415,11 @@
 
                         use File::Spec;
 
-                        my $sysfs = "/sys/class/tacho-motor";
+                        my $sysfs = '/sys/class/tacho-motor';
 
                         my $max_speed_file = File::Spec->catfile(
                             $sysfs, 
-                            "motor0", 
+                            'motor0', 
                             'max_speed'
                         );
 
@@ -435,20 +441,13 @@
 
                 <section>
                     <pre><code data-trim data-noescape class="perl">
-                        my $max_speed_file = File::Spec->catfile(
-                            $tacho_sys_dir,
-                            "motor$sn",
-                            'max_speed'
-                        );
+                        my $sysfs = '/sys/class/tacho-motor';
 
-                        open my $fh,
-                                '&lt;',
-                                $max_speed_file || die "Could not open $max_speed_file $1";
+                        my $data = $sysfs.IO.add('motor0').add('max_speed').slurp.chomp;
 
-                        my @lines = <$fh>;
-
-                        close $fh;
+                        say "My max speed is: $data\n";
                     </code></pre>
+                    ...btw Perl 6<br><small>avoid $*SPEC</small>
                 </section>
 
                 <section>
@@ -480,6 +479,7 @@
 
                 <section>
                     What about Perl 6?<br> <h3 class="fragment">:(</h3>
+                    <span class="fragment">...maybe using Perl 6 externally?</span>
                 </section>
 
                 <section>
@@ -489,12 +489,14 @@
 
                 <section>
                     <h3>Raspberry PI 3 B</h3>
-                    <small>CPU: 1.2 GHZ quad-core ARM Cortex A53 (ARMv8 Instruction Set)</small><br>
-                    <small>GPU: Broadcom VideoCore IV @ 400 MHz</small><br>
-                    <small>Memory: 1 GB LPDDR2-900 SDRAM</small><br>
-                    <small>USB ports: 4</small><br>
-                    <small>Network: 10/100 MBPS Ethernet, 802.11n Wireless LAN, Bluetooth 4.0 (BLE)</small><br>
-                    <small>GPIO</small>
+                    <table style="border: none; font-size: .7em">
+                        <tr><td>CPU</td><td>1.2 GHZ quad-core ARM Cortex A53 (ARMv8 Instruction Set)</td></tr>
+                        <tr><td>GPU</td><td>Broadcom VideoCore IV @ 400 MHz</td></tr>
+                        <tr><td>Memory</td><td>1 GB LPDDR2-900 SDRAM</td></tr>
+                        <tr><td>USB</td><td>4 Ports</td></tr>
+                        <tr><td>Network</td><td>10/100 MBPS Ethernet, 802.11n Wireless LAN, Bluetooth 4.0 (BLE)</td></tr>
+                        <tr><td>GPIO</td></tr>
+                    </table>
                 </section>
 
                 <section>
@@ -549,6 +551,14 @@
 
                 <section>
                     <img src="images/OpenWest-Hadouken.gif" class="no-border" width="350px"><br>
+                    <!-- Start: TPC Only -->
+                    <h4>Travis Chase</h4>
+                    <small>Endurance International Group.</small><br>
+                    <small><a href="mailto: gaudeon@cpan.org" target="_blank">gaudeon@cpan.org</a></small><br>
+                    <small><a href="http://github.com/gaudeon" target="_blank">github.com/gaudeon</a></small>
+                    <!-- End: TPC Only -->
+                    <!-- Start: OpenWest Only -->
+                    <!--
                     <div style="display: inline-block; width: 40%; ">
                         <h4>Travis Chase</h4>
                         <small>Endurance International Group.</small><br>
@@ -556,11 +566,11 @@
                         <small><a href="http://github.com/gaudeon" target="_blank">github.com/gaudeon</a></small>
                     </div>
                     <div style="display: inline-block; width: 30%">
-                        <!-- Start: `OpenWest Only -->
-                        <!--<img src="images/openwestqr.png" width="60%"><br>
-                        <a href="https://joind.in/talk/f36e7" target="_blank">Joind.in</a>-->
-                        <!-- End: OpenWest Only -->
+                        <img src="images/openwestqr.png" width="60%"><br>
+                        <a href="https://joind.in/talk/f36e7" target="_blank">Joind.in</a>
                     </div>
+                    -->
+                    <!-- End: OpenWest Only -->
                 </section>
                
 			</div>
@@ -578,6 +588,7 @@
             <div class="credit ev3devlangsupporttip" data-img="images/ev3devlangsupporttip.png">Captured from www.ev3dev.org/docs/programming-languages</div>
             <div class="credit lucy" data-img="images/lucy.jpg">Photo: Allentchang | commons.wikimedia.org/wiki/File:Lucy_and_the_psychiatric_help_booth.jpg | BY-SA-3.0</div>
             <div class="credit ev3motors" data-img="images/ev3motors.jpg">Data from www.slideshare.net/ragunathanselvaraj/lego-mindstrom-ev3</div>
+            <div class="credit minifig" data-img="images/lego_minifig.jpg">Photo: Jeff Eaton | www.flickr.com/photos/jeffeaton/ | BY-SA-2.0</div>
         </div>
 
 		<script src="lib/js/head.min.js"></script>

@@ -121,7 +121,7 @@
 @each $credit in (
     dragonlance ev3visualloop ev3brick langsev3dev
     ev3devcperl docker ev3devcexamples ev3devcperlexamples
-    ev3devlangsupporttip lucy ev3motors
+    ev3devlangsupporttip lucy ev3motors minifig
                  )  {
     .#{$credit} .credit.#{$credit} {
         display: block;
